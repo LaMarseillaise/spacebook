@@ -8,6 +8,8 @@ class CreateProfiles < ActiveRecord::Migration
       t.string  :phone_number
       t.text    :quotes
       t.text    :about
+      t.integer :photo_id
+      t.integer :cover_photo_id
 
       t.timestamps
     end

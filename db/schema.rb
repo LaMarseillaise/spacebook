@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141101000242) do
+ActiveRecord::Schema.define(version: 20141031004104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "comments", force: true do |t|
+  create_table "comments", force: :cascade do |t|
     t.integer  "author_id",                    null: false
     t.text     "content",                      null: false
     t.integer  "commentable_id",               null: false
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20141101000242) do
     t.datetime "updated_at"
   end
 
-  create_table "friendings", force: true do |t|
+  create_table "friendings", force: :cascade do |t|
     t.integer  "friender_id", null: false
     t.integer  "friend_id",   null: false
     t.datetime "created_at"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20141101000242) do
 
   add_index "friendings", ["friender_id", "friend_id"], name: "index_friendings_on_friender_id_and_friend_id", unique: true, using: :btree
 
-  create_table "likes", force: true do |t|
+  create_table "likes", force: :cascade do |t|
     t.integer  "likable_id",   null: false
     t.string   "likable_type", null: false
     t.integer  "liker_id",     null: false
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20141101000242) do
 
   add_index "likes", ["likable_type", "likable_id", "liker_id"], name: "index_likes_on_likable_type_and_likable_id_and_liker_id", unique: true, using: :btree
 
-  create_table "photos", force: true do |t|
+  create_table "photos", force: :cascade do |t|
     t.integer  "author_id",                      null: false
     t.string   "photo_file_name",                null: false
     t.string   "photo_content_type",             null: false
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20141101000242) do
 
   add_index "photos", ["author_id"], name: "index_photos_on_author_id", using: :btree
 
-  create_table "posts", force: true do |t|
+  create_table "posts", force: :cascade do |t|
     t.integer  "author_id",               null: false
     t.text     "content",                 null: false
     t.datetime "created_at"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20141101000242) do
     t.integer  "likes_count", default: 0, null: false
   end
 
-  create_table "profiles", force: true do |t|
+  create_table "profiles", force: :cascade do |t|
     t.integer  "user_id",        null: false
     t.string   "school"
     t.string   "hometown"
@@ -74,28 +74,28 @@ ActiveRecord::Schema.define(version: 20141101000242) do
     t.string   "phone_number"
     t.text     "quotes"
     t.text     "about"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "photo_id"
     t.integer  "cover_photo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", unique: true, using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "first_name",      null: false
     t.string   "last_name",       null: false
     t.string   "email",           null: false
     t.string   "password_digest", null: false
     t.string   "gender"
     t.date     "birthday"
+    t.string   "auth_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "auth_token"
   end
 
-  add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["auth_token"], name: "index_users_on_auth_token", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["password_digest"], name: "index_users_on_password_digest", using: :btree
 
 end

@@ -16,10 +16,7 @@ You can find an [example of Danebook](https://danishbook.herokuapp.com/) on Hero
  - Set it to be the cover photo.
  - Set it to be the profile photo.
 7. Navigate to the user show page by clicking on the name 'Jane Smith' in the top navbar.
-8. Switch to the 'About' tab.
-9. Click on any of the 'Edit Profile' buttons.
-10. Make a change to the profile information and click the save button.
-11. Sign out with the button on the right of the top navbar.
+8. Sign out with the button on the right of the top navbar.
 
 Created by [Andur Carr](https://github.com/LaMarseillaise) for [Viking Code School](http://vikingcodeschool.com)
 
