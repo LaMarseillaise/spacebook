@@ -4,17 +4,17 @@ RSpec.describe User, type: :model do
   let(:user){ FactoryGirl.create :user }
 
   context 'associations' do
-    it { is_expected.to have_one :profile }
-    it { is_expected.to have_one :cover_photo }
+    it { is_expected.to have_one(:profile).dependent(:destroy) }
+    it { is_expected.to have_one(:cover_photo).through(:profile) }
 
-    it { is_expected.to have_many :posts }
-    it { is_expected.to have_many :comments }
-    it { is_expected.to have_many :photos }
-    it { is_expected.to have_many :likes }
-    it { is_expected.to have_many :initiated_friendings }
-    it { is_expected.to have_many :friended_users }
-    it { is_expected.to have_many :received_friendings }
-    it { is_expected.to have_many :users_friended_by }
+    it { is_expected.to have_many(:posts).dependent(:destroy).with_foreign_key(:author_id) }
+    it { is_expected.to have_many(:comments).dependent(:destroy).with_foreign_key(:author_id) }
+    it { is_expected.to have_many(:photos).dependent(:destroy).with_foreign_key(:author_id) }
+    it { is_expected.to have_many(:likes).dependent(:destroy).with_foreign_key(:liker_id) }
+    it { is_expected.to have_many(:initiated_friendings).class_name('Friending').with_foreign_key(:friender_id) }
+    it { is_expected.to have_many(:friended_users).through(:initiated_friendings).source(:friend_recipient) }
+    it { is_expected.to have_many(:received_friendings).class_name('Friending').with_foreign_key(:friend_id) }
+    it { is_expected.to have_many(:users_friended_by).through(:received_friendings).source(:friend_initiator) }
 
     it { is_expected.to have_secure_password }
   end

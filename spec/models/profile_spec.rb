@@ -4,7 +4,7 @@ RSpec.describe Profile, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to :user }
     it { is_expected.to belong_to :photo }
-    it { is_expected.to belong_to :cover_photo }
+    it { is_expected.to belong_to(:cover_photo).class_name('Photo') }
   end
 
   describe 'validations' do

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Friending, type: :model do
   context 'associations' do
-    it { is_expected.to belong_to :friend_initiator }
-    it { is_expected.to belong_to :friend_recipient }
+    it { is_expected.to belong_to(:friend_initiator).class_name('User').with_foreign_key(:friender_id) }
+    it { is_expected.to belong_to(:friend_recipient).class_name('User').with_foreign_key(:friend_id) }
   end
 
   context 'validations' do

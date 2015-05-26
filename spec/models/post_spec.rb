@@ -6,10 +6,10 @@ RSpec.describe Post, type: :model do
   let(:random_post) { FactoryGirl.create(:post) }
 
   context 'associations' do
-    it { is_expected.to belong_to :author }
-    it { is_expected.to have_many :likes }
-    it { is_expected.to have_many :comments }
-    it { is_expected.to have_many :likers }
+    it { is_expected.to belong_to(:author).class_name('User') }
+    it { is_expected.to have_many(:likes).dependent(:destroy) }
+    it { is_expected.to have_many(:comments).dependent(:destroy) }
+    it { is_expected.to have_many(:likers).through(:likes) }
   end
 
   context 'validations' do

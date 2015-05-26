@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Like, type: :model do
   context 'associations' do
     it { is_expected.to belong_to(:likable).counter_cache(true) }
-    it { is_expected.to belong_to :liker }
+    it { is_expected.to belong_to(:liker).class_name('User') }
   end
 
   context 'validations' do

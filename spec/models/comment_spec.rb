@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe Comment, type: :model do
   context 'associations' do
     it { is_expected.to belong_to :commentable }
-    it { is_expected.to belong_to :author }
+    it { is_expected.to belong_to(:author).class_name('User') }
 
-    it { is_expected.to have_many :likes }
+    it { is_expected.to have_many(:likes).dependent(:destroy) }
   end
 
   context 'validations' do
