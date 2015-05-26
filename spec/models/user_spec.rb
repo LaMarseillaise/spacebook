@@ -15,6 +15,8 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many :friended_users }
     it { is_expected.to have_many :received_friendings }
     it { is_expected.to have_many :users_friended_by }
+
+    it { is_expected.to have_secure_password }
   end
 
   context 'validations' do
@@ -24,7 +26,7 @@ RSpec.describe User, type: :model do
 
     it 'should validate tag uniqueness of email' do
       FactoryGirl.create :user
-      should validate_uniqueness_of :email
+      expect(subject).to validate_uniqueness_of :email
     end
 
     it { is_expected.to validate_length_of(:password).is_at_least(8) }
