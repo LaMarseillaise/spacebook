@@ -17,8 +17,6 @@ User.new({
   birthday:   Date.today - 21.years
 }).save
 
-User.first.build_profile.save
-
 32.times do
   u = User.new
 
@@ -40,7 +38,7 @@ User.first.build_profile.save
   end
 
   # Profile
-  u.build_profile({
+  u.profile.update({
     school:         Faker::Company.name,
     hometown:       Faker::Address.city,
     current_town:   Faker::Address.city,
@@ -50,7 +48,7 @@ User.first.build_profile.save
     created_at:     Time.now - 3.months,
     photo_id:       u.photos.shuffle.first.id,
     cover_photo_id: u.photos.shuffle.first.id
-  }).save
+  })
 
   # Add some posts
   (rand(20)).times do
@@ -96,5 +94,3 @@ User.all.each do |user|
     end
   end
 end
-
-
