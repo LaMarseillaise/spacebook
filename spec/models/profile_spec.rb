@@ -16,9 +16,7 @@ RSpec.describe Profile, type: :model do
     it { is_expected.to validate_length_of(:current_town).is_at_most(255) }
     it { is_expected.to validate_length_of(:phone_number).is_at_most(255) }
 
-    it 'should validate the presence of the user' do
-      FactoryGirl.create(:profile)
-      should validate_presence_of(:user)
-    end
+    it { is_expected.to validate_presence_of :user }
+    it { is_expected.to validate_uniqueness_of :user_id }
   end
 end
