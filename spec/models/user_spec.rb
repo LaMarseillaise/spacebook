@@ -15,8 +15,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:friended_users).through(:initiated_friendings).source(:friend_recipient) }
     it { is_expected.to have_many(:received_friendings).class_name('Friending').with_foreign_key(:friend_id) }
     it { is_expected.to have_many(:users_friended_by).through(:received_friendings).source(:friend_initiator) }
-
-    it { is_expected.to have_secure_password }
   end
 
   context 'validations' do

@@ -1,0 +1,40 @@
+<aside class="col-md-6 home-info">
+  <h2>Connect with all your friends!</h2>
+  <ul>
+    <li>See photos and updates in your news feed.</li>
+    <li>Post your status for the world to see from your profile.</li>
+    <li>Get in touch with your friends by "friending" them.</li>
+    <li>Like things because you're a positive person.</li>
+  </ul>
+</aside>
+
+<div class="col-md-6">
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name),
+        defaults: { input_html: { class: 'form-control' },
+        wrapper_html: { class: 'form-group col-xs-12' } }) do |rf| %>
+    <div class="col-xs-12">
+      <h3>Sign Up</h3>
+      <%= rf.error_notification %>
+    </div>
+
+    <%= rf.input :first_name, required: true, placeholder: 'Your first name', wrapper_html: { class: 'form-group col-xs-6' } %>
+
+    <%= rf.input :last_name, required: true, placeholder: 'Your last name', wrapper_html: { class: 'form-group col-xs-6' } %>
+
+    <%= rf.input :email, required: true, placeholder: 'Your email address' %>
+
+    <%= rf.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable), placeholder: "Your new password" %>
+
+    <%= rf.input :password_confirmation, required: true, placeholder: "Re-enter password" %>
+
+    <%= rf.input :birthday, end_year: (Date.today.year-100), start_year: (Date.today.year-15), prompt: {day: "Day", month: "Month", year: "Year"}, order: [:month, :day, :year], wrapper_html: { class: 'form-inline col-xs-12' } %>
+
+    <div class="form-group col-xs-12">
+      <%= rf.input :gender, as: :radio_buttons, collection: ["Female", "Male"], wrapper_html: { class: 'form-inline' } %>
+    </div>
+
+    <div class="form-group col-xs-12">
+      <%= rf.button :submit, "Sign Up", class: "btn btn-danish btn-large btn-block" %>
+    </div>
+  <% end %>
+</div>

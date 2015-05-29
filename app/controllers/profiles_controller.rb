@@ -1,6 +1,4 @@
 class ProfilesController < ApplicationController
-  before_action :require_current_user, only: [:edit, :update]
-
   def show
     @user = User.find(params[:user_id])
     @profile = @user.profile
@@ -37,11 +35,7 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile).permit(:school,
-                                    :hometown,
-                                    :current_town,
-                                    :phone_number,
-                                    :quotes,
-                                    :about) if params[:profile]
+    params.require(:profile).permit(:school, :hometown, :current_town,
+                                    :phone_number, :quotes, :about) if params[:profile]
   end
 end

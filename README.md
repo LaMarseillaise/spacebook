@@ -23,7 +23,6 @@ Created by [Andur Carr](https://github.com/LaMarseillaise) for [Viking Code Scho
 - - -
 
 ####To do:
-- Add [Devise](https://github.com/plataformatec/devise)
 - Add [Sunspot](https://github.com/sunspot/sunspot)
 - Add [Premailer](https://github.com/fphilipe/premailer-rails)
 - Add [Delayed Job](https://github.com/collectiveidea/delayed_job)

@@ -1,13 +1,14 @@
 class User < ActiveRecord::Base
-  before_create :generate_token
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
   after_create :create_profile
-  has_secure_password
 
   has_one :profile, dependent: :destroy
   has_one :cover_photo, through: :profile
 
-  has_many :posts,    foreign_key: :author_id, dependent: :destroy
-  has_many :comments, foreign_key: :author_id, dependent: :destroy
+  has_many :posts,    -> { order(created_at: :desc) }, foreign_key: :author_id, dependent: :destroy
+  has_many :comments, -> { order(created_at: :asc) },  foreign_key: :author_id, dependent: :destroy
   has_many :photos,   foreign_key: :author_id, dependent: :destroy
   has_many :likes,    foreign_key: :liker_id,  dependent: :destroy
 
@@ -33,18 +34,6 @@ class User < ActiveRecord::Base
 
   def friend_requests
     users_friended_by.where.not(id: friended_users.pluck(:id))
-  end
-
-  def generate_token
-    begin
-      self[:auth_token] = SecureRandom.urlsafe_base64
-    end while User.exists?(auth_token: self[:auth_token])
-  end
-
-  def regenerate_auth_token
-    self.auth_token = nil
-    generate_token
-    save!
   end
 
   def self.welcome_email(user_id)

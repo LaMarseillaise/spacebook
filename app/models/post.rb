@@ -6,8 +6,7 @@ class Post < ActiveRecord::Base
   has_many :likers, through: :likes
 
   validates :author,  presence: true
-  validates :content, presence: true,
-                        length: { maximum: 255 }
+  validates :content, presence: true, length: { maximum: 255 }
 
   scope :friends_posts, -> user { where(author_id: user.friends.pluck(:id) << user.id) }
   scope :posted_since, -> time { where("created_at > ?", time) }
