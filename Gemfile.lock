@@ -89,9 +89,6 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
-    bullet (4.14.0)
-      activesupport (>= 3.0.0)
-      uniform_notifier (>= 1.6.0)
     byebug (2.7.0)
       columnize (~> 0.3)
       debugger-linecache (~> 1.2)
@@ -299,7 +296,6 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unicode_utils (1.4.0)
-    uniform_notifier (1.6.2)
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.7)
@@ -317,7 +313,6 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   better_errors
   binding_of_caller
-  bullet
   capybara
   coffee-rails (~> 4.0.0)
   devise
