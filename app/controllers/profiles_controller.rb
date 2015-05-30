@@ -9,33 +9,37 @@ class ProfilesController < ApplicationController
   def edit
     @user = current_user
     @profile = current_user.profile
-
     respond_to :html, :js
   end
 
-  # Way too complicated
   def update
-    @user = current_user
     @profile = current_user.profile
-    @profile.photo = @user.photos.find(params[:photo_id]) if params[:photo_id]
-    @profile.cover_photo = @user.photos.find(params[:cover_photo_id]) if params[:cover_photo_id]
 
-    if params[:profile] && @profile.update_attributes(profile_params)
+    if @profile.update_attributes(profile_params)
       flash[:success] = "Profile updated"
-      redirect_to user_profile_path(@user)
-    elsif @profile.save
-      flash[:success] = "Photo updated"
-      redirect_to @user
+      redirect_to profile_path(current_user)
     else
       flash[:error] = "Something went wrong when saving your profile"
       render :edit
     end
   end
 
+  def update_photo
+    @photo = current_user.photos.find(params[:photo_id])
+    current_user.profile_photo = @photo
+    redirect_to photo_path(@photo)
+  end
+
+  def update_cover
+    @photo = current_user.photos.find(params[:photo_id])
+    current_user.cover_photo = @photo
+    redirect_to photo_path(@photo)
+  end
+
   private
 
   def profile_params
     params.require(:profile).permit(:school, :hometown, :current_town,
-                                    :phone_number, :quotes, :about) if params[:profile]
+                                    :phone_number, :quotes, :about)
   end
 end

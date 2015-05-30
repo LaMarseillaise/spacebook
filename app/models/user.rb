@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   after_create :create_profile
 
   has_one :profile, dependent: :destroy
+  has_one :profile_photo, through: :profile, source: :photo
   has_one :cover_photo, through: :profile
 
   has_many :posts,    -> { order(created_at: :desc) }, foreign_key: :author_id, dependent: :destroy

@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   end
 
   resource :profile, only: [:edit, :update]
+
+  patch "/cover_photo/:photo_id" => "profiles#update_cover", as: :update_cover_photo
+  patch "/profile_photo/:photo_id" => "profiles#update_photo", as: :update_profile_photo
+
   resources :friends, only: [:create, :destroy]
 
   resources(:photos, only: [:show, :new, :create, :destroy]) do

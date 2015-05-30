@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
 
   context 'associations' do
     it { is_expected.to have_one(:profile).dependent(:destroy) }
+    it { is_expected.to have_one(:profile_photo).through(:profile).source(:photo) }
     it { is_expected.to have_one(:cover_photo).through(:profile) }
 
     it { is_expected.to have_many(:posts).dependent(:destroy).with_foreign_key(:author_id) }
