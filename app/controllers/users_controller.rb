@@ -8,7 +8,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @friends = @user.friends.includes(profile: :photo)
     @posts = @user.posts.include_post_info.paginate(:page => params[:page], :per_page => 20)
-    @post = current_user.posts.build
 
     respond_to :html, :js
   end

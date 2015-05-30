@@ -1,9 +1,7 @@
 class PostsController < ApplicationController
   def index
-    @user = current_user
-    @posts = Post.friends_posts(@user).include_post_info.paginate(page: params[:page], :per_page => 16)
-    @post = current_user.posts.build
-    @popular_week = Post.recently_popular(@user, 7.days)
+    @posts = Post.friends_posts(current_user).include_post_info.paginate(page: params[:page], :per_page => 16)
+    @popular_week = Post.recently_popular(current_user, 7.days)
   end
 
   def show
@@ -12,14 +10,13 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.build(post_params)
-    @user = @post.author
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @user, notice: "Status updated" }
+        format.html { redirect_to current_user, notice: "Status updated" }
         format.js { render :create, status: :created, location: @post }
       else
-        format.html { redirect_to @user, notice: "Something went wrong with your post" }
+        format.html { redirect_to current_user, notice: "Something went wrong with your post" }
         format.js { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -27,12 +24,11 @@ class PostsController < ApplicationController
 
   def destroy
     @post = current_user.posts.find(params[:id])
-    @user = @post.author
 
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to user_path(@user), notice: "Post deleted" }
+      format.html { redirect_to user_path(current_user), notice: "Post deleted" }
       format.js { render :destroy, status: 200 }
     end
   end
