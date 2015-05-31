@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
-  def index
-    @user = current_user
-    @users = @user.friend_requests.includes(profile: :photo).paginate(:page => params[:page], :per_page => 12)
+  def friend_requests
+    @users = current_user.friend_requests.includes(profile: :photo).paginate(:page => params[:page], :per_page => 12)
   end
 
   def show

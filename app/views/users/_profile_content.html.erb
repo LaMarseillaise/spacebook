@@ -1,20 +1,22 @@
-<aside class = "col-md-4">
-  <%= render "info_pane", info: "profile" %>
-  <%= render "info_pane", info: "photos" %>
-  <%= render "info_pane", info: "friends" %>
-</aside>
+<div class="row">
+  <aside class = "col-md-4">
+    <%= render "info_pane", info: "profile" %>
+    <%= render "info_pane", info: "photos" if @user.photos.present? %>
+    <%= render "info_pane", info: "friends" if @user.friends.present? %>
+  </aside>
 
-<!--post feed-->
-<div class = "col-md-8">
-  <%= render 'posts/post_form' if @user == current_user %>
+  <!--post feed-->
+  <div class = "col-md-8">
+    <%= render 'posts/post_form' if @user == current_user %>
 
-  <div id="post-area">
-    <% @posts.each do |post| %>
-      <%= render 'posts/post', post: post %>
-    <% end %>
+    <div id="post-area">
+      <% @posts.each do |post| %>
+        <%= render 'posts/post', post: post %>
+      <% end %>
 
-    <div class="col-xs-12 text-center">
-      <%= will_paginate @posts, renderer: BootstrapPagination::Rails %>
+      <div class="col-xs-12 text-center">
+        <%= will_paginate @posts, renderer: BootstrapPagination::Rails %>
+      </div>
     </div>
   </div>
 </div>

@@ -3,11 +3,13 @@ Rails.application.routes.draw do
   devise_for :users
   root 'posts#index'
 
-  resources(:users, only: [:index, :show]) do
+  resources(:users, only: [:show]) do
     resource :profile, only: [:show]
     resources :friends, only: [:index]
     resources :photos, only: [:index]
   end
+
+  get :friend_requests, controller: :users
 
   resource :profile, only: [:edit, :update]
 
