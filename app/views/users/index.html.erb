@@ -1,16 +1,13 @@
-<section class="info-pane col-md-12">
-  <header class="row">
-    <div class="col-md-12">
-      <h2><%= "Friend Requests"%></h2>
-    </div>
+<section class="panel panel-primary">
+  <header class="panel-heading text-center">
+    Friend Requests
   </header>
 
-  <section class = "row">
-
+  <section class="panel-body">
     <%= render @users %>
-    <div class="col-xs-12 pagination">
-      <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
-    </div>
-
   </section>
+
+  <footer class="panel-footer text-center">
+    <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+  </footer>
 </section>

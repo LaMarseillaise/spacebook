@@ -1,15 +1,16 @@
-<section class="info-pane col-md-12">
-  <header class="row">
-    <div class="col-md-12">
-      <%= link_to "Add Photo!", new_photo_path, class: "btn btn-danish pull-right" %>
-      <h2><%= "#{@user.name}'s Photos" %></h2>
-    </div>
+<section class="panel panel-primary">
+  <header class="panel-heading text-center">
+    <%= "#{@user.name}'s Photos" %>
   </header>
 
-  <section class="row">
+  <section class="panel-body">
     <%= render @photos %>
-    <div class="col-xs-12 pagination">
-      <%= will_paginate @photos, renderer: BootstrapPagination::Rails %>
-    </div>
   </section>
+
+  <footer class="panel-footer text-center">
+    <%= will_paginate @photos, renderer: BootstrapPagination::Rails %>
+    <% if @user == current_user %>
+      <%= link_to "Upload Photo!", new_photo_path, class: "btn btn-primary btn-block" %>
+    <% end %>
+  </footer>
 </section>

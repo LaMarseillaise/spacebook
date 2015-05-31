@@ -5,12 +5,12 @@
   <h1><%= @user.name %></h1>
 </div>
 
-<nav class="nav profile-navbar">
+<nav class="nav navbar-default">
   <ul class="nav nav-pills pull-right">
     <li><%= link_to 'Timeline', @user, remote: true %></li>
     <li><%= link_to 'About', user_profile_path(@user), remote: true %></li>
-    <li><%= link_to "Photos (#{@user.photos.count})", user_photos_path(@user), remote: true %></li>
-    <li><%= link_to "Friends (#{@user.friends.count})", user_friends_path(@user), remote: true %></li>
+    <li><%= link_to "#{(content_tag :span, @user.photos.count, class: 'badge')} Photos".html_safe, user_photos_path(@user), remote: true %></li>
+    <li><%= link_to "#{(content_tag :span, @user.friends.count, class: 'badge')} Friends".html_safe, user_friends_path(@user), remote: true %></li>
     <li>
       <%= edit_profile_button(@user) %>
     </li>

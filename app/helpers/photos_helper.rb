@@ -16,9 +16,7 @@ module PhotosHelper
   end
 
   def set_photo_bar(user)
-    if user == current_user
-      render "set_photo_bar"
-    end
+    render "set_photo_bar" if user == current_user
   end
 
   def random_photos(user)

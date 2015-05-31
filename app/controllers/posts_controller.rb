@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.friends_posts(current_user).include_post_info.paginate(page: params[:page], :per_page => 16)
+    @posts = Post.friends_posts(current_user).include_post_info.
+              order(created_at: :desc).paginate(page: params[:page], :per_page => 16)
     @popular_week = Post.recently_popular(current_user, 7.days)
   end
 

@@ -1,26 +1,30 @@
-<section class="info-pane col-md-12">
-  <header class="row">
-    <div class="col-md-12">
-      <h2>New Photo</h2>
-    </div>
+<section class="panel panel-primary">
+  <header class="panel-heading text-center">
+    <h2>New Photo</h2>
   </header>
 
-  <section class="row">
-    <div class="col-xs-12">
-      <%= render 'shared/errors', object: @photo %>
-      <%= form_for @photo do |web_photo_field| %>
+  <section class="panel-body">
+    <%= render 'shared/errors', object: @photo %>
+    <%= form_for(@photo, html: { class: "col-sm-6" }) do |web_photo_field| %>
+      <div class="form-group">
         <%= web_photo_field.label :url, "Paste the url to a photo on the web" %>
         <%= web_photo_field.text_field :url, class: "form-control" %>
-        <%= web_photo_field.submit "Use Web Photo", class: "btn btn-danish btn-large" %>
-      <% end %>
+      </div>
 
-      <h4>-or-</h4>
+      <div class="form-group">
+        <%= web_photo_field.submit "Use Web Photo", class: "btn btn-primary btn-large btn-block" %>
+      </div>
+    <% end %>
 
-      <%= form_for @photo do |upload_photo_field| %>
+    <%= form_for(@photo, html: { class: "col-sm-6" }) do |upload_photo_field| %>
+      <div class="form-group">
         <%= upload_photo_field.label :photo, "Select a photo from your computer" %>
         <%= upload_photo_field.file_field :photo, class: "form-control" %>
-        <%= upload_photo_field.submit "Upload Photo", class: "btn btn-danish btn-large" %>
-      <% end %>
-    </div>
+      </div>
+
+      <div class="form-group">
+        <%= upload_photo_field.submit "Upload Photo", class: "btn btn-primary btn-large btn-block" %>
+      </div>
+    <% end %>
   </section>
 </section>

@@ -2,15 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import 'colors';
-
-.info-pane, .post-pane {
-  img {
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-}
-
 .hero {
   height: 300px;
   position: relative;
@@ -48,13 +39,8 @@
 .post-picture {
   padding: 1px;
   margin: 10px;
-  border: 1px solid $flag-darker;
+  border: 1px solid black;
   background-color: white;
   height: 50px;
   width: 50px;
-}
-
-.show-photo {
-  margin-top: 15px;
-  margin-bottom: 15px;
 }
