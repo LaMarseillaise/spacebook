@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :photos, only: [:index]
   end
 
-  get :friend_requests, controller: :users
+  get :friend_requests, controller: :friends
 
   resources :posts, only: [:create, :destroy, :show]
   resources :photos, only: [:show, :new, :create, :destroy]

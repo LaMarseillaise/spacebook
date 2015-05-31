@@ -5,14 +5,17 @@ class FriendsController < ApplicationController
     respond_to :html, :js
   end
 
+  def friend_requests
+    @users = current_user.friend_requests.includes(profile: :photo).paginate(:page => params[:page], :per_page => 12)
+  end
+
   def create
     session[:return_to] ||= request.referer
-    @user = current_user
     @target = User.find(params[:id])
-    @friend_request = @user.initiated_friendings.build(friend_id: @target.id)
+    @friend_request = current_user.initiated_friendings.build(friend_id: @target.id)
 
     respond_to do |format|
-      if @user != @target && @friend_request.save!
+      if current_user != @target && @friend_request.save!
         format.html { redirect_to session.delete(:return_to), notice: "Friend request sent" }
         format.js { render :create, status: :created }
       else
@@ -24,17 +27,12 @@ class FriendsController < ApplicationController
 
   def destroy
     session[:return_to] ||= request.referer
-    @user = current_user
     @target = User.find(params[:id])
-
-    # to delete the users initiated friending with the target
-    friending1 = Friending.where(friend_id: @target.id).find_by_friender_id(@user.id)
-    # to prevent the target from showing up in friend requests
-    friending2 = Friending.where(friender_id: @target.id).find_by_friend_id(@user.id)
+    friendings = Friending.where(friend_id: [@target.id, current_user.id],
+                               friender_id: [@target.id, current_user.id])
 
     respond_to do |format|
-      # Covers all cases, but needs refactoring
-      if (friending1 || friending2) && (!friending1 || friending1.destroy) && (!friending2 || friending2.destroy)
+      if friendings.destroy_all
         format.html { redirect_to session.delete(:return_to), notice: "User unfriended" }
         format.js
       end
