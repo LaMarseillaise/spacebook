@@ -11,7 +11,7 @@ module PhotosHelper
     if user.profile.photo
       image_tag user.profile.photo.photo.url(size), alt: "#{user.name}", class: css_class
     else
-      image_tag "user_silhouette_generic.gif", :alt => "#{user.name}", class: css_class
+      image_tag "user_silhouette.gif", :alt => "#{user.name}", class: css_class
     end
   end
 
