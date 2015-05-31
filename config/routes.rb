@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   patch "/profile_photo/:photo_id" => "profiles#update_photo", as: :update_profile_photo
 
   resources :friends, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
 
   resources(:photos, only: [:show, :new, :create, :destroy]) do
     resources :likes, only: [:create, :destroy], defaults: { likable: 'Photo' }
