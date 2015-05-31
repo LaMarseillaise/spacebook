@@ -1,18 +1,13 @@
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name),
-      html: { class: "navbar-form navbar-right" } ) do |f| %>
-    <div class="form-group">
-      <%= f.input :email, required: false, autofocus: true, placeholder: "email", label: false, input_html: { class: "form-control" } %>
-    </div>
+      html: { class: "navbar-form navbar-right" },
+      defaults: { wrapper_html: { class: "form-group" },
+                  label: false, error: false }) do |f| %>
 
-    <div class="form-group">
-      <%= f.input :password, required: false, placeholder: "password", label: false, input_html: { class: "form-control" } %>
-    </div>
+  <%= f.input :email, required: false, autofocus: true, placeholder: "email", input_html: { class: "form-control" } %>
 
-    <div class="form-group">
-      <%= f.input :remember_me, as: :boolean, label: false, inline_label: true if devise_mapping.rememberable? %>
-    </div>
+  <%= f.input :password, required: false, placeholder: "password", input_html: { class: "form-control" } %>
 
-    <div class="form-group">
-      <%= f.button :submit, "Sign In", class: "btn btn-primary" %>
-    </div>
+  <%= f.input :remember_me, as: :boolean, inline_label: " Remember" %>
+
+  <%= f.button :submit, "Sign In", class: "btn btn-primary" %>
 <% end %>

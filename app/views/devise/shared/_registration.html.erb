@@ -1,40 +1,50 @@
-<aside class="col-md-6 home-info">
-  <h2>Connect with all your friends!</h2>
-  <ul>
-    <li>See photos and updates in your news feed.</li>
-    <li>Post your status for the world to see from your profile.</li>
-    <li>Get in touch with your friends by "friending" them.</li>
-    <li>Like things because you're a positive person.</li>
-  </ul>
-</aside>
+<div class="row">
+  <aside class="col-md-6 col-xs-12 home-info">
+    <h2>Connect with your friends and Denmark on Danebook.</h2>
+    <ul>
+      <li><strong>See photos and updates</strong> from friends News Feed.</li>
+      <li><strong>Share what's new</strong> in your life on your Timeline.</li>
+      <li><strong>Find all your friends</strong> and share.</li>
+    </ul>
+  </aside>
 
-<div class="col-md-6 panel panel-default">
-  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name),
-        defaults: { input_html: { class: 'form-control' },
-        wrapper_html: { class: 'form-group col-xs-12' } }) do |rf| %>
-    <div class="col-xs-12">
-      <h2>Sign Up</h2>
-      <%= rf.error_notification %>
+  <section class="col-md-6 col-xs-12">
+    <div class="panel panel-default">
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name),
+            html: { class: 'form-horizontal panel-body' },
+            defaults: { input_html: { class: 'form-control' },
+                        wrapper_html: { class: 'form-group col-xs-12' },
+                        label: false, error: false }) do |rf| %>
+        <h2>Sign Up</h2>
+        <p>It's free and always will be for copyright reasons.</p>
+
+        <%= rf.input :first_name, required: true, placeholder: 'First name',
+                      wrapper_html: { class: 'col-xs-6' },
+                      input_html: { class: 'form-group form-control' } %>
+
+        <%= rf.input :last_name, required: true, placeholder: 'Last name',
+                      wrapper_html: { class: 'col-xs-6' },
+                      input_html: { class: 'form-group form-control' } %>
+
+        <%= rf.input :email, required: true, placeholder: 'Email address' %>
+
+        <%= rf.input :password, required: true,
+            hint: ("#{@minimum_password_length} characters minimum" if @validatable),
+            placeholder: "Password" %>
+
+        <%= rf.input :password_confirmation, required: true, placeholder: "Re-enter password" %>
+
+        <%= rf.input :birthday, end_year: (Date.today.year-100), start_year: (Date.today.year-13),
+                      label: "Birthday", order: [:month, :day, :year],
+                      prompt: {day: "Day", month: "Month", year: "Year"},
+                      wrapper_html: {class: "form-inline form-group col-xs-12"} %>
+
+        <%= rf.input :gender, as: :radio_buttons, label: false,
+                      collection: ["Female", "Male", "Other"],
+                      item_wrapper_class: "radio-inline", input_html: { class: ""} %>
+
+        <%= rf.button :submit, "Sign Up", class: "btn btn-success btn-large btn-block" %>
+      <% end %>
     </div>
-
-    <%= rf.input :first_name, required: true, placeholder: 'Your first name', wrapper_html: { class: 'form-group col-xs-6' } %>
-
-    <%= rf.input :last_name, required: true, placeholder: 'Your last name', wrapper_html: { class: 'form-group col-xs-6' } %>
-
-    <%= rf.input :email, required: true, placeholder: 'Your email address' %>
-
-    <%= rf.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable), placeholder: "Your new password" %>
-
-    <%= rf.input :password_confirmation, required: true, placeholder: "Re-enter password" %>
-
-    <%= rf.input :birthday, end_year: (Date.today.year-100), start_year: (Date.today.year-15), prompt: {day: "Day", month: "Month", year: "Year"}, order: [:month, :day, :year], wrapper_html: { class: 'form-inline col-xs-12' } %>
-
-    <div class="form-group col-xs-12">
-      <%= rf.input :gender, as: :radio_buttons, collection: ["Female", "Male"], wrapper_html: { class: 'form-inline' } %>
-    </div>
-
-    <div class="form-group col-xs-12">
-      <%= rf.button :submit, "Sign Up", class: "btn btn-primary btn-large btn-block" %>
-    </div>
-  <% end %>
+  </section>
 </div>

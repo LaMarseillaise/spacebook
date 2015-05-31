@@ -1,7 +1,7 @@
 .home-info {
   ul {
     line-height: 54px;
-    font-size: 16px;
+    font-size: 14px;
     color: #777;
   }
 }
@@ -9,6 +9,10 @@
 body {
   background-color: #EDF0F5!important;
   margin-top: 50px;
+}
+
+.navbar-form label {
+  color: #777;
 }
 
 main {
