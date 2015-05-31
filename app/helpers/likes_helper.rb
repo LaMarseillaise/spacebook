@@ -1,9 +1,9 @@
 module LikesHelper
-  def like_button(object, parent=nil)
+  def like_button(object)
     if user_like = object.likes.find_by_liker_id(current_user.id)
-      link_to "Unlike", [parent, object, user_like], method: "DELETE"
+      link_to "Unlike", user_like, method: "DELETE"
     else
-      link_to "Like", [parent, object, :likes], method: "POST"
+      link_to "Like", likes_path(like: {likable_type: object.class, likable_id: object.id}), method: "POST"
     end
   end
 
