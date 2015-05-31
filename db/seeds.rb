@@ -8,15 +8,6 @@
 
 # Users
 
-User.new({
-  first_name: "Jane",
-  last_name:  "Smith",
-  email:      "jane.smith@example.com",
-  password:   "password",
-  gender:     "Female",
-  birthday:   Date.today - 21.years
-}).save
-
 32.times do
   u = User.new
 
@@ -32,7 +23,7 @@ User.new({
 
   # Add some photos
   (rand(10)+1).times do
-    photo = u.photos.build
+    photo = u.photos.build(created_at: Faker::Time.between(u.created_at, Time.now))
     photo.photo_from_url(Faker::Avatar.image)
     photo.save
   end
@@ -45,52 +36,45 @@ User.new({
     phone_number:   Faker::PhoneNumber.phone_number,
     quotes:         Faker::Lorem.sentence,
     about:          Faker::Lorem.paragraph,
-    created_at:     Time.now - 3.months,
+    created_at:     u.created_at,
     photo_id:       u.photos.shuffle.first.id,
     cover_photo_id: u.photos.shuffle.first.id
   })
 
+  # give them eight friends
+  User.where.not(id: u.id).shuffle[0..8].each { |friend| u.friended_users << friend }
+
   # Add some posts
   (rand(20)).times do
-    u.posts.build({
+    post = u.posts.create({
       content:    Faker::Hacker.say_something_smart,
       created_at: Faker::Time.between(u.created_at, Time.now)
-    }).save
+    })
   end
 end
 
-# Friends
-User.all.each do |user|
-  User.all.shuffle[0..rand(32)].each do |friend|
-    if friend != user
-      Friending.new({
-        friender_id: user.id,
-        friend_id:   friend.id
-      }).save
-    end
-  end
-
-  # Bots accept all friend requests
-  if user.id != 1
-    user.friend_requests.each do |friend|
-      Friending.new({
-        friender_id: user.id,
-        friend_id:   friend.id
-      }).save
-    end
-  end
+# bots accept all friend requests
+User.where.not(id: 1) do |user|
+  user.friend_requests.each { |friend| u.friended_users << friend }
 end
 
 # Comments
-User.all.each do |user|
-  if user.id != 1
-    Post.where(author_id: user.friends.pluck(:id)).shuffle[0..rand(50)].each do |post|
-      post.comments.build({
-        author_id:  user.id,
-        content:    Faker::Lorem.sentence,
-        created_at: Faker::Time.between(post.created_at, Time.now)
-      }).save
-      post.likes.build(liker_id: user.id).save
-    end
+User.where.not(id: 1).each do |user|
+  Post.where(author_id: user.friends.pluck(:id)).shuffle[0..rand(10)].each do |post|
+    post.comments.create({
+      author_id:  user.id,
+      content:    Faker::Lorem.sentence,
+      created_at: Faker::Time.between(post.created_at, Time.now)
+    })
+    post.likes.create(liker_id: user.id)
+  end
+
+  Photo.where(author_id: user.friends.pluck(:id)).shuffle[0..rand(10)].each do |photo|
+    photo.comments.create({
+      author_id:  user.id,
+      content:    Faker::Lorem.sentence,
+      created_at: Faker::Time.between(photo.created_at, Time.now)
+    })
+    photo.likes.create(liker_id: user.id)
   end
 end
