@@ -10,6 +10,18 @@ RSpec.describe PostsController, type: :controller do
 
   before(:each) { sign_in(:user, user) }
 
+  describe 'GET #show' do
+    before(:each) { get :show, id: user_post.id }
+
+    it 'renders the show page' do
+      expect(response).to render_template :show
+    end
+
+    it 'assigns an @post variable' do
+      expect(assigns(:post)).to eq(user_post)
+    end
+  end
+
   describe 'GET #index' do
     let(:friend) do
       f = FactoryGirl.create(:user)
