@@ -41,6 +41,3 @@ Created by [Andur Carr](https://github.com/LaMarseillaise) for [Viking Code Scho
 
 ####Bugs:
 - Clear forms after Ajax submission.
-- Fix html redirects for likes (and others)
-- Improve index page load times
-- Fix profile photo thumbnail on photo show page

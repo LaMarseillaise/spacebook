@@ -5,7 +5,10 @@ RSpec.describe ProfilesController, type: :controller do
   let(:other_user) { FactoryGirl.create(:user) }
   let(:photo) { FactoryGirl.create(:photo, author: user) }
 
-  before(:each) { sign_in(:user, user) }
+  before(:each) do
+    sign_in(:user, user)
+    request.env['HTTP_REFERER'] = photo_url(photo)
+  end
 
   describe 'GET #show' do
     before(:each) { get :show, user_id: other_user.id }
@@ -75,8 +78,8 @@ RSpec.describe ProfilesController, type: :controller do
         expect(user.profile_photo).to eq(photo)
       end
 
-      it 'redirects to the photo show page' do
-        expect(response).to redirect_to photo_path(photo)
+      it 'redirects back' do
+        expect(response).to redirect_to :back
       end
     end
   end
@@ -92,8 +95,8 @@ RSpec.describe ProfilesController, type: :controller do
         expect(user.cover_photo).to eq(photo)
       end
 
-      it 'redirects to the photo show page' do
-        expect(response).to redirect_to photo_path(photo)
+      it 'redirects back' do
+        expect(response).to redirect_to :back
       end
     end
   end

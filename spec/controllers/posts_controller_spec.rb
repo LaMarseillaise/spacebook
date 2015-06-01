@@ -8,7 +8,10 @@ RSpec.describe PostsController, type: :controller do
   let(:valid_attrs)   { FactoryGirl.attributes_for(:post) }
   let(:invalid_attrs) { FactoryGirl.attributes_for(:post, content: "H"*257) }
 
-  before(:each) { sign_in(:user, user) }
+  before(:each) do
+    sign_in(:user, user)
+    request.env['HTTP_REFERER'] = root_url
+  end
 
   describe 'GET #show' do
     before(:each) { get :show, id: user_post.id }
@@ -52,9 +55,9 @@ RSpec.describe PostsController, type: :controller do
         expect{ post :create, post: valid_attrs }.to change(Post, :count).by(1)
       end
 
-      it 'redirects to the user\'s show page' do
+      it 'redirects back' do
         post :create, post: valid_attrs
-        expect(response).to redirect_to user_path(user)
+        expect(response).to redirect_to :back
       end
     end
 
@@ -63,9 +66,9 @@ RSpec.describe PostsController, type: :controller do
         expect{ post :create, post: invalid_attrs }.not_to change(Post, :count)
       end
 
-      it 'redirect to the user\'s show page' do
+      it 'redirects back' do
         post :create, post: invalid_attrs
-        expect(response).to redirect_to user_path(user)
+        expect(response).to redirect_to :back
       end
     end
   end
@@ -76,9 +79,9 @@ RSpec.describe PostsController, type: :controller do
       expect{ delete :destroy, id: user_post.id }.to change(Post, :count).by(-1)
     end
 
-    it 'redirects to the user\'s show page' do
+    it 'redirects back' do
       delete :destroy, id: user_post.id
-      expect(response).to redirect_to user_path(user)
+      expect(response).to redirect_to :back
     end
   end
 end

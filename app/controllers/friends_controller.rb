@@ -10,7 +10,6 @@ class FriendsController < ApplicationController
   end
 
   def create
-    session[:return_to] ||= request.referer
     @target = User.find(params[:id])
     @friend_request = current_user.initiated_friendings.build(friend_id: @target.id)
 
@@ -26,7 +25,6 @@ class FriendsController < ApplicationController
   end
 
   def destroy
-    session[:return_to] ||= request.referer
     @target = User.find(params[:id])
     friendings = Friending.where(friend_id: [@target.id, current_user.id],
                                friender_id: [@target.id, current_user.id])

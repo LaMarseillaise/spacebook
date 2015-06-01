@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  skip_before_action :save_return_address, only: [:show]
+
   def index
     @posts = Post.friends_posts(current_user).include_post_info.
               order(created_at: :desc).paginate(page: params[:page], :per_page => 16)
@@ -14,10 +16,10 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to current_user, notice: "Status updated" }
+        format.html { redirect_to session.delete(:return_to), notice: "Status updated" }
         format.js { render :create, status: :created, location: @post }
       else
-        format.html { redirect_to current_user, notice: "Something went wrong with your post" }
+        format.html { redirect_to session.delete(:return_to), notice: "Something went wrong with your post" }
         format.js { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -29,7 +31,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to user_path(current_user), notice: "Post deleted" }
+      format.html { redirect_to session.delete(:return_to), notice: "Post deleted" }
       format.js { render :destroy, status: 200 }
     end
   end

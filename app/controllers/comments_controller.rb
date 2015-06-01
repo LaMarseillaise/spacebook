@@ -1,11 +1,10 @@
 class CommentsController < ApplicationController
   def create
-    session[:return_to] ||= request.referer
     @comment = current_user.comments.build(comment_params)
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment.commentable }
+        format.html { redirect_to session.delete(:return_to) }
         format.js
       else
         format.html { redirect_to session.delete(:return_to), notice: "An error occurred" }
@@ -15,7 +14,6 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    session[:return_to] ||= request.referer
     @comment = current_user.comments.find(params[:id])
 
     if @comment.destroy

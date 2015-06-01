@@ -27,13 +27,13 @@ class ProfilesController < ApplicationController
   def update_photo
     @photo = current_user.photos.find(params[:photo_id])
     current_user.profile_photo = @photo
-    redirect_to photo_path(@photo)
+    redirect_to session.delete(:return_to)
   end
 
   def update_cover
     @photo = current_user.photos.find(params[:photo_id])
     current_user.cover_photo = @photo
-    redirect_to photo_path(@photo)
+    redirect_to session.delete(:return_to)
   end
 
   private

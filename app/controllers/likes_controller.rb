@@ -1,7 +1,5 @@
 class LikesController < ApplicationController
   def create
-    # so they can go back thence they came
-    session[:return_to] ||= request.referer
     @like = current_user.likes.build(like_params)
     if @like.save
       flash[:success] = "#{like_params[:likable_type].capitalize} liked"
@@ -13,7 +11,6 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    session[:return_to] ||= request.referer
     @like = current_user.likes.find(params[:id])
     if @like.destroy
       flash[:success] = "#{@like.likable_type} unliked"

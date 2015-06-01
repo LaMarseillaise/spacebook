@@ -25,7 +25,7 @@ RSpec.describe FriendsController, type: :controller do
 
   before(:each) do
     sign_in(:user, user)
-    request.env['HTTP_REFERER'] = profile_path(user)
+    request.env['HTTP_REFERER'] = profile_url(user)
   end
 
   describe 'GET #index' do
@@ -52,7 +52,7 @@ RSpec.describe FriendsController, type: :controller do
 
     it 'redirects back' do
       post :create, id: nonfriend.id
-      expect(response).to redirect_to profile_path(user)
+      expect(response).to redirect_to :back
     end
   end
 
@@ -77,18 +77,18 @@ RSpec.describe FriendsController, type: :controller do
 
     it 'redirects back' do
       delete :destroy, id: friend.id
-      expect(response).to redirect_to profile_path(user)
+      expect(response).to redirect_to :back
     end
   end
 
   describe 'GET #friend_requests' do
     before(:each) { requester; get :friend_requests }
 
-    it 'should render the friend request page' do
+    it 'renders the friend request page' do
       expect(response).to render_template :friend_requests
     end
 
-    it 'should display the user\'s friend requests' do
+    it 'displays the user\'s friend requests' do
       expect(assigns(:users)).to include requester
     end
   end
