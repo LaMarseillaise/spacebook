@@ -11,12 +11,12 @@
   <section class="col-md-6 col-xs-12">
     <div class="panel panel-default">
       <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name),
-            html: { class: 'form-horizontal panel-body' },
+            html: { class: 'form-vertical panel-body' },
             defaults: { input_html: { class: 'form-control' },
                         wrapper_html: { class: 'form-group col-xs-12' },
                         label: false, error: false }) do |rf| %>
-        <h2>Sign Up</h2>
-        <p>It's free and always will be for copyright reasons.</p>
+        <h2 class="col-xs-12">Sign Up</h2>
+        <p class="col-xs-12">It's free and always will be for copyright reasons.</p>
 
         <%= rf.input :first_name, required: true, placeholder: 'First name',
                       wrapper_html: { class: 'col-xs-6' },
@@ -39,11 +39,16 @@
                       prompt: {day: "Day", month: "Month", year: "Year"},
                       wrapper_html: {class: "form-inline form-group col-xs-12"} %>
 
+        <!-- simple_form *hardcoding* prevents the alignment of these radio buttons -->
         <%= rf.input :gender, as: :radio_buttons, label: false,
                       collection: ["Female", "Male", "Other"],
-                      item_wrapper_class: "radio-inline", input_html: { class: ""} %>
+                      item_wrapper_class: "radio-inline",
+                      wrapper_html: { class: "col-xs-12 form-group" },
+                      input_html: { class: ""} %>
 
-        <%= rf.button :submit, "Sign Up", class: "btn btn-success btn-large btn-block" %>
+        <div class="col-xs-12">
+          <%= rf.button :submit, "Sign Up", class: "btn-success btn-large btn-block" %>
+        </div>
       <% end %>
     </div>
   </section>
