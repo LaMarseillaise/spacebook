@@ -1,13 +1,13 @@
-<div class="row">
+<div class="row" id='<%= "#{likable.class.to_s.downcase}-#{likable.id}" %>-likes'>
   <div class="col-xs-12">
     <div class="pull-left">
-      <%= like_button(object) %>
+      <%= like_button(likable) %>
     </div>
     <div class="pull-left">
-      <%= likes_count(object) %>
+      <%= likes_count(likable) %>
     </div>
     <div class="pull-right">
-      <%= delete_button(object) %>
+      <%= delete_button(likable) %>
     </div>
   </div>
 </div>

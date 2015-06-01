@@ -6,6 +6,7 @@ RSpec.describe Comment, type: :model do
     it { is_expected.to belong_to(:author).class_name('User') }
 
     it { is_expected.to have_many(:likes).dependent(:destroy) }
+    it { is_expected.to have_many(:likers).through(:likes) }
   end
 
   context 'validations' do

@@ -31,7 +31,7 @@
   <h3>Popular This Week</h3>
   <ul class="list-group">
     <% @popular_week.each do |post| %>
-      <li class="list-group-item"><%= post.likes.size %> people like <%= link_to post.author.first_name, post.author %>'s <%= link_to "post", post %> from <%= time_ago_in_words(post.created_at) %> ago.</li>
+      <li class="list-group-item"><%= post.likes_count %> people like <%= link_to post.author.first_name, post.author %>'s <%= link_to "post", post %> from <%= time_ago_in_words(post.created_at) %> ago.</li>
     <% end %>
   </ul>
 </div>

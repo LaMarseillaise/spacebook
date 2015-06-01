@@ -3,6 +3,7 @@ class Comment < ActiveRecord::Base
   belongs_to :author, class_name: "User"
 
   has_many :likes, as: :likable, dependent: :destroy
+  has_many :likers, through: :likes
 
   # make sure that the user and commented item are real
   validates :author, :commentable, presence: true

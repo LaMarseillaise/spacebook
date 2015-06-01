@@ -1,23 +1,25 @@
 class LikesController < ApplicationController
   def create
     @like = current_user.likes.build(like_params)
-    if @like.save
-      flash[:success] = "#{like_params[:likable_type].capitalize} liked"
-      redirect_to session.delete(:return_to)
-    else
-      flash[:error] = "An error occurred while liking"
-      redirect_to session.delete(:return_to)
+    @likable = @like.likable
+    @like.save
+
+    respond_to do |format|
+      format.html { redirect_to session.delete(:return_to) }
+      format.js
     end
   end
 
   def destroy
     @like = current_user.likes.find(params[:id])
-    if @like.destroy
-      flash[:success] = "#{@like.likable_type} unliked"
-      redirect_to session.delete(:return_to)
-    else
-      flash[:error] = "An error occurred while unliking"
-      redirect_to session.delete(:return_to)
+    @likable = @like.likable
+    @like.destroy
+
+    @likable.reload
+
+    respond_to do |format|
+      format.html { redirect_to session.delete(:return_to) }
+      format.js
     end
   end
 

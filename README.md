@@ -30,14 +30,5 @@ Created by [Andur Carr](https://github.com/LaMarseillaise) for [Viking Code Scho
 - Set up combined Post and Photo index
 - Style emails
 - Mutual friends; friends.where(id: target.friends.pluck(:id))
-
-- - -
-
-####Javascript:
-- Navbar Widgets
-- Like Button
-
-- - -
-
-####Bugs:
 - Clear forms after Ajax submission.
+- Navbar Widgets

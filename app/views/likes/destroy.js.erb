@@ -1,0 +1,1 @@
+$('#<%= @likable.class.to_s.downcase %>-<%= @likable.id %>-likes').replaceWith("<%= escape_javascript(render partial: 'shared/likes_bar', locals: { likable: @likable } ) %>");
