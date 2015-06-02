@@ -1,8 +1,8 @@
-#Danebook!
+#Spacebook!
 
-Danebook is a social networking app for Danish people.
+*Created by [Andur Carr](https://github.com/LaMarseillaise)*
 
-You can find an [example of Danebook](https://danishbook.herokuapp.com/) on Heroku.
+Spacebook is a social networking app for interstellar travelers.
 
 1. Sign in with the top menu bar:
  - Email: 'jane.smith@example.com'
@@ -18,7 +18,6 @@ You can find an [example of Danebook](https://danishbook.herokuapp.com/) on Hero
 7. Navigate to the user show page by clicking on the name 'Jane Smith' in the top navbar.
 8. Sign out with the button on the right of the top navbar.
 
-Created by [Andur Carr](https://github.com/LaMarseillaise) for [Viking Code School](http://vikingcodeschool.com)
 
 - - -
 

@@ -5,15 +5,15 @@ default: &default
 
 development:
   <<: *default
-  database: Danebook_development
+  database: Spacebook_development
   timeout: 5000
 
 test:
   <<: *default
-  database: Danebook_test
+  database: Spacebook_test
   timeout: 5000
 
 production:
   <<: *default
-  database: Danebook_production
+  database: Spacebook_production
   timeout: 5000

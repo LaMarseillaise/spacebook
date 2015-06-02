@@ -1,6 +1,6 @@
-<h1>Welcome to Danebook, <%= "#{@user.first_name}" %>!</h1>
+<h1>Welcome to Spacebook, <%= "#{@user.first_name}" %>!</h1>
 
-<p>Thank you for signing up for Danebook. Danebook is a social networking app for Danish students.</p>
+<p>Thank you for signing up for Spacebook. Spacebook is a social networking app for interstellar travelers.</p>
 
 <ul>
   <li>Build your friends' list so you can see what your friends are up to.</li>
@@ -8,7 +8,7 @@
   <li>Upload your photos to share.</li>
 </ul>
 
-<p>Visit your own page <%= link_to "here", polymorphic_url(@user) %> or consider adding some of your fellow Danes to your friends' list:</p>
+<p>Visit your own page <%= link_to "here", polymorphic_url(@user) %> or consider adding some of your fellow space travelers to your friends' list:</p>
 
 <ul>
   <% User.all.shuffle[0..2].each do |friend_candidate| %>
