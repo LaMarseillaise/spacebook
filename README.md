@@ -4,30 +4,28 @@
 
 Spacebook is a social networking app for interstellar travelers.
 
-1. Sign in with the top menu bar:
+Follow the steps below to try it out:
+
+1. Visit [Spacebook on Heroku](https://dry-spire-5274.herokuapp.com/)
+2. Sign in with the top menu bar:
  - Email: 'jane.smith@example.com'
  - Password: 'password'
-2. Once signed in, compose a post with the form at the top of the post list. Press the 'Post' button when finished.
-3. Comment on your own or another person's post.
-4. Click on the 'Upload Photo' link on the left side navbar.
-5. Upload a photo of your choice with a url or from your computer (limit 1MB).
-6. Do one of the following:
+3. Once signed in, compose a post with the form at the top of the post list. Press the 'Post' button when finished.
+4. Comment on your own or another person's post.
+5. Click on the 'Upload Photo' link on the left side navbar.
+6. Upload a photo of your choice with a url or from your computer (limit 1MB).
+7. Do one of the following:
  - Like the photo.
  - Set it to be the cover photo.
  - Set it to be the profile photo.
-7. Navigate to the user show page by clicking on the name 'Jane Smith' in the top navbar.
-8. Sign out with the button on the right of the top navbar.
-
+8. Navigate to the user show page by clicking on the name 'Jane Smith' in the top navbar.
+9. Sign out with the button on the right of the top navbar.
 
 - - -
 
 ####To do:
-- Add [Sunspot](https://github.com/sunspot/sunspot)
-- Add [Premailer](https://github.com/fphilipe/premailer-rails)
-- Add [Delayed Job](https://github.com/collectiveidea/delayed_job)
-- Build search results page
+- Build user search function
 - Set up combined Post and Photo index
-- Style emails
-- Mutual friends; friends.where(id: target.friends.pluck(:id))
 - Clear forms after Ajax submission.
 - Navbar Widgets
+- Style emails
