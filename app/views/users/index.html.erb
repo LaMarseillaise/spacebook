@@ -1,0 +1,13 @@
+<section class="panel panel-primary">
+  <header class="panel-heading text-center">
+    Search results for "<%= params[:query] %>"
+  </header>
+
+  <section class="panel-body">
+    <%= render @users %>
+  </section>
+
+  <footer class="panel-footer text-center">
+    <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+  </footer>
+</section>

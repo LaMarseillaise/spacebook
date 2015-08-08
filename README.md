@@ -24,7 +24,6 @@ Follow the steps below to try it out:
 - - -
 
 ####To do:
-- Build user search function
 - Set up combined Post and Photo index
 - Clear forms after Ajax submission.
 - Navbar Widgets

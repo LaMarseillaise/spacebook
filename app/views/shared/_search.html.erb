@@ -3,6 +3,7 @@
   <li><%= link_to "Requests", friend_requests_path %></li>
   <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
 </ul>
-<form class="navbar-form navbar-right">
-  <input type="text" class="form-control" placeholder="Search...">
-</form>
+
+<%= form_tag users_path, method: "GET", class: "navbar-form navbar-right" do %>
+  <%= search_field_tag(:query, nil, class: "form-control", placeholder: 'Search...', value: params[:query]) %>
+<% end %>

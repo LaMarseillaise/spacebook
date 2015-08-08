@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include PgSearch
+  pg_search_scope :search_by_full_name, against: [:first_name, :last_name], using: { tsearch: { prefix: true } }
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 

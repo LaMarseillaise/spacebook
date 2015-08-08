@@ -19,6 +19,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 
 gem 'devise'
+gem 'pg_search'
 gem 'figaro'
 gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
 gem 'aws-sdk'
