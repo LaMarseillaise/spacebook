@@ -15,8 +15,6 @@ class PhotosController < ApplicationController
   end
 
   def create
-    @user = current_user
-
     if params[:photo] && params[:photo][:url].present?
       @photo = current_user.photos.build
       @photo.photo_from_url(params[:photo][:url])
