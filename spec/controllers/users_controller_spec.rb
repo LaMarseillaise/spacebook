@@ -13,6 +13,22 @@ RSpec.describe UsersController, type: :controller do
 
   before(:each) { sign_in(:user, user) }
 
+  describe 'GET #index' do
+    let!(:searchable_user) { FactoryGirl.create(:user, first_name: "Xyzzyx", last_name: "Abccba") }
+    let!(:nonsearchable_user) { FactoryGirl.create(:user, first_name: "Lmno", last_name: "Hijk")}
+
+    before(:each) { get :index, query: "abc xyz" }
+
+    it 'renders the index page' do
+      expect(response).to render_template :index
+    end
+
+    it 'returns a list of found users' do
+      expect(assigns(:users)).to include(searchable_user)
+      expect(assigns(:users)).not_to include(nonsearchable_user)
+    end
+  end
+
   describe 'GET #show' do
     before(:each) do
       friend_post
