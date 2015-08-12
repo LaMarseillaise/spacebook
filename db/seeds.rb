@@ -1,80 +1,103 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+scalar = 40
+photos_count = 0
 
-# Users
+def generate_comments(user, commentable_class)
+  commentable_class.where(author_id: user.friends.pluck(:id)).shuffle[0..(rand(20))].each do |commentable|
+    commentable.comments.create!(
+      author_id:  user.id,
+      content:    Faker::Lorem.sentence,
+      created_at: Faker::Time.between(commentable.created_at, Time.now)
+    )
 
-32.times do
-  u = User.new
+    commentable.likes.create!(liker_id: user.id)
+  end
+end
 
-  u.first_name = Faker::Name.first_name
-  u.last_name  = Faker::Name.last_name
-  u.email      = Faker::Internet.free_email(u.name)
-  u.password   = Faker::Internet.password(8)
-  u.gender     = ["Female", "Male", "Other"].sample
-  u.birthday   = Faker::Date.between(73.years.ago, 13.years.ago)
-  u.created_at = Faker::Time.between(6.months.ago, Time.now)
 
-  u.save
+# create a test user
+test_user = User.create!(
+  first_name: "Jane",
+  last_name:  "Smith",
+  email:      "jane.smith@example.com",
+  password:   "password",
+  gender:     "Female",
+  birthday:   Date.today - 21.years
+)
 
-  # Add some photos
-  (rand(10)+1).times do
-    photo = u.photos.build(created_at: Faker::Time.between(u.created_at, Time.now))
-    photo.photo_from_url(Faker::Avatar.image)
-    photo.save
+
+test_user.posts.create!(content: "First!")
+
+
+# generate users
+puts "Creating users..."
+users = (1..scalar).map do |i|
+  User.create!(
+    first_name: first_name = Faker::Name.first_name,
+    last_name:  last_name  = Faker::Name.last_name,
+    email:      Faker::Internet.free_email(first_name + " " + last_name),
+    password:   Faker::Internet.password(8),
+    gender:     ["Female", "Male", "Other"].sample,
+    birthday:   Faker::Date.between(73.years.ago, 13.years.ago),
+    created_at: Faker::Time.between(6.months.ago, Time.now)
+  )
+end
+
+puts "Generating posts and photos..."
+users.each do |user|
+  # generate friends
+  User.where.not(id: user.id).shuffle[0..(scalar/3)].each { |friend| user.friended_users << friend }
+
+  # generate posts
+  (rand(20)+1).times do
+    user.posts.create!(
+      content:    Faker::Hacker.say_something_smart,
+      created_at: Faker::Time.between(user.created_at, Time.now + 7.days)
+    )
   end
 
-  # Profile
-  u.profile.update({
+  # generate photos
+  (rand(10)+1).times do
+    STDOUT.write "\r#{photos_count += 1}..."
+    photo = user.photos.build(created_at: Faker::Time.between(user.created_at, Time.now))
+    photo.photo_from_url(Faker::Avatar.image)
+    photo.save!
+  end
+
+  # generate profile info
+  user.profile.update!(
     school:         Faker::Company.name,
     hometown:       Faker::Address.city,
     current_town:   Faker::Address.city,
     phone_number:   Faker::PhoneNumber.phone_number,
     quotes:         Faker::Lorem.sentence,
     about:          Faker::Lorem.paragraph,
-    created_at:     u.created_at,
-    photo_id:       u.photos.shuffle.first.id,
-    cover_photo_id: u.photos.shuffle.first.id
-  })
-
-  # give them eight friends
-  User.where.not(id: u.id).shuffle[0..8].each { |friend| u.friended_users << friend }
-
-  # Add some posts
-  (rand(20)).times do
-    post = u.posts.create({
-      content:    Faker::Hacker.say_something_smart,
-      created_at: Faker::Time.between(u.created_at, Time.now)
-    })
-  end
+    photo_id:       user.photos.shuffle.first.id,
+    cover_photo_id: user.photos.shuffle.first.id
+  )
 end
 
-# bots accept all friend requests
-User.where.not(id: 1) do |user|
-  user.friend_requests.each { |friend| u.friended_users << friend }
+
+# accept all friend requests
+puts "\nAccepting friend requests..."
+users.each do |user|
+  user.friend_requests.each { |friend| user.friended_users << friend }
 end
 
-# Comments
-User.where.not(id: 1).each do |user|
-  Post.where(author_id: user.friends.pluck(:id)).shuffle[0..rand(10)].each do |post|
-    post.comments.create({
-      author_id:  user.id,
-      content:    Faker::Lorem.sentence,
-      created_at: Faker::Time.between(post.created_at, Time.now)
-    })
-    post.likes.create(liker_id: user.id)
-  end
 
-  Photo.where(author_id: user.friends.pluck(:id)).shuffle[0..rand(10)].each do |photo|
-    photo.comments.create({
-      author_id:  user.id,
-      content:    Faker::Lorem.sentence,
-      created_at: Faker::Time.between(photo.created_at, Time.now)
-    })
-    photo.likes.create(liker_id: user.id)
+# generate comments and likes
+puts "Generating comments..."
+users.each do |user|
+  # for posts
+  generate_comments(user, Post)
+
+  # for photos
+  generate_comments(user, Photo)
+end
+
+
+# generate likes for comments
+users.each do |user|
+  Comment.where(author_id: user.friends.pluck(:id)).shuffle[0..(rand(20))].each do |comment|
+    comment.likes.create!(liker_id: user.id)
   end
 end
