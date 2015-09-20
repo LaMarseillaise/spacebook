@@ -14,18 +14,19 @@ def generate_comments(user, commentable_class)
 end
 
 
-# create a test user
-test_user = User.create!(
-  first_name: "Jane",
-  last_name:  "Smith",
-  email:      "jane.smith@example.com",
-  password:   "password",
-  gender:     "Female",
-  birthday:   Date.today - 21.years
-)
+if User.where(email: "jane.smith@example.com").length == 0
+  # create a test user
+  test_user = User.create!(
+    first_name: "Jane",
+    last_name:  "Smith",
+    email:      "jane.smith@example.com",
+    password:   "password",
+    gender:     "Female",
+    birthday:   Date.today - 21.years
+  )
 
-
-test_user.posts.create!(content: "First!")
+  test_user.posts.create!(content: "First!")
+end
 
 
 # generate users
@@ -56,7 +57,7 @@ users.each do |user|
   end
 
   # generate photos
-  (rand(10)+1).times do
+  (rand(5)+1).times do
     STDOUT.write "\r#{photos_count += 1}..."
     photo = user.photos.build(created_at: Faker::Time.between(user.created_at, Time.now))
     photo.photo_from_url(Faker::Avatar.image)

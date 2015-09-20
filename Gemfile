@@ -26,6 +26,8 @@ gem 'aws-sdk'
 gem 'bcrypt', '~> 3.1.7'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'faker'
+
 group :development do
   gem 'spring'
   gem 'better_errors'
@@ -35,7 +37,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'faker'
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.0'
